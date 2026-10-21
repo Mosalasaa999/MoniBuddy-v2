@@ -1,4 +1,5 @@
 ﻿import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { UserProfile, IncomeStream, EssentialExpense } from '../database/types';
 
 interface LocalState {
@@ -7,46 +8,77 @@ interface LocalState {
   incomes: IncomeStream[];
   expenses: EssentialExpense[];
   
+  setHydrated: (state: boolean) => void;
   initializeLocalDB: () => Promise<void>;
   updateCash: (amount: number) => Promise<void>;
   addExpense: (expense: Omit<EssentialExpense, 'id'>) => Promise<void>;
   addIncome: (income: Omit<IncomeStream, 'id'>) => Promise<void>;
   markExpensePaid: (id: string) => Promise<void>;
+  resetStore: () => void;
 }
 
-export const useAppStore = create<LocalState>((set, get) => ({
-  isHydrated: false,
-  user: { id: 'guest', name: 'Guest', current_cash: 0, created_at: Date.now() },
-  incomes: [],
-  expenses: [],
+export const useAppStore = create<LocalState>()(
+  persist(
+    (set, get) => ({
+      isHydrated: false,
+      user: { id: 'guest', name: 'Guest', current_cash: 0, created_at: Date.now() },
+      incomes: [],
+      expenses: [],
 
-  initializeLocalDB: async () => {
-    set({ isHydrated: true });
-  },
+      setHydrated: (state: boolean) => set({ isHydrated: state }),
 
-  updateCash: async (amount) => {
-    const { user } = get();
-    if (!user) return;
-    set({ user: { ...user, current_cash: amount } });
-  },
+      initializeLocalDB: async () => {
+        // Hydration handled deterministically by persist middleware
+        set({ isHydrated: true });
+      },
 
-  addExpense: async (expense) => {
-    const newExpense: EssentialExpense = { ...expense, id: crypto.randomUUID() };
-    set((state) => ({ 
-      expenses: [...state.expenses, newExpense].sort((a, b) => a.due_date - b.due_date) 
-    }));
-  },
+      updateCash: async (amount) => {
+        const { user } = get();
+        if (!user) return;
+        set({ user: { ...user, current_cash: amount } });
+      },
 
-  addIncome: async (income) => {
-    const newIncome: IncomeStream = { ...income, id: crypto.randomUUID() };
-    set((state) => ({ 
-      incomes: [...state.incomes, newIncome].sort((a, b) => a.expected_date - b.expected_date) 
-    }));
-  },
+      addExpense: async (expense) => {
+        const newExpense: EssentialExpense = { ...expense, id: crypto.randomUUID() };
+        set((state) => ({ 
+          expenses: [...state.expenses, newExpense].sort((a, b) => a.due_date - b.due_date) 
+        }));
+      },
 
-  markExpensePaid: async (id) => {
-    set((state) => ({
-      expenses: state.expenses.map(e => e.id === id ? { ...e, is_paid: true } : e)
-    }));
-  }
-}));
+      addIncome: async (income) => {
+        const newIncome: IncomeStream = { ...income, id: crypto.randomUUID() };
+        set((state) => ({ 
+          incomes: [...state.incomes, newIncome].sort((a, b) => a.expected_date - b.expected_date) 
+        }));
+      },
+
+      markExpensePaid: async (id) => {
+        set((state) => ({
+          expenses: state.expenses.map((e) =>
+            e.id === id ? { ...e, is_paid: !e.is_paid } : e
+          ),
+        }));
+      },
+
+      resetStore: () => {
+        set({
+          user: { id: 'guest', name: 'Guest', current_cash: 0, created_at: Date.now() },
+          incomes: [],
+          expenses: [],
+        });
+      },
+    }),
+    {
+      name: 'monibuddy-offline-store',
+      storage: createJSONStorage(() => localStorage),
+      partialize: (state) => ({
+        user: state.user,
+        incomes: state.incomes,
+        expenses: state.expenses,
+      }),
+      onRehydrateStorage: () => (state) => {
+        state?.setHydrated(true);
+      },
+    }
+  )
+);
