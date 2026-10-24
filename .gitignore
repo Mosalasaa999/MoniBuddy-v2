@@ -1,0 +1,23 @@
+﻿# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+dist/
+
+# Environment and IDE
+.env
+.env.local
+.vscode/
+.idea/
+
+# Android Native Exclusions (CRITICAL: Do NOT remove local.properties)
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/public/
+android/.idea/
+android/*.iml
+android/app/*.iml

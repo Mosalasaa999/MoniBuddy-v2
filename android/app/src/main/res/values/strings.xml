@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MoniBuddy</string>
+    <string name="title_activity_main">MoniBuddy</string>
+    <string name="package_name">com.monibuddy.app</string>
+    <string name="custom_url_scheme">com.monibuddy.app</string>
+</resources>

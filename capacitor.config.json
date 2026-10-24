@@ -1,0 +1,15 @@
+﻿{
+  "appId": "com.monibuddy.app",
+  "appName": "MoniBuddy",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "CapacitorSQLite": {
+      "androidIsEncryption": true,
+      "androidBiometric": {
+        "biometricAuth": false,
+        "biometricTitle": "Biometric login for capacitor sqlite"
+      }
+    }
+  }
+}
