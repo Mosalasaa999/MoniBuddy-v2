@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Secrets - never commit these
 .env
 .env.*
@@ -14,3 +15,28 @@ secrets/
 node_modules/
 dist/
 build/
+=======
+﻿# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build
+dist/
+
+# Environment and IDE
+.env
+.env.local
+.vscode/
+.idea/
+
+# Android Native Exclusions (CRITICAL: Do NOT remove local.properties)
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+android/app/src/main/assets/public/
+android/.idea/
+android/*.iml
+android/app/*.iml
+>>>>>>> d3a4a41 (feat(core): initialize Capacitor 8 + SQLite native ledger architecture)
