@@ -12,10 +12,7 @@ const useOfflineStore = create((set, get) => ({
   
   initDatabase: async () => {
     try {
-      // Initialize real Capacitor SQLite connection
-      const ret = await sqlite.checkConnectionsConsistency();
       const isConn = (await sqlite.isConnection('monibuddy_db', false)).result;
-      
       let db;
       if (isConn) {
         db = await sqlite.createConnection('monibuddy_db', false, 'no-encryption', 1, false);
@@ -25,7 +22,6 @@ const useOfflineStore = create((set, get) => ({
       
       await db.open();
       
-      // Execute live schema creation for local persistence
       const schema = 
         CREATE TABLE IF NOT EXISTS transactions (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
