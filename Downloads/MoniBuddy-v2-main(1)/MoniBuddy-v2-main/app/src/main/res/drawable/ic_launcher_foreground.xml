@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+    <!-- Centered M glyph for MoniBuddy adaptive icon (safe zone padded) -->
+    <group
+        android:scaleX="0.72"
+        android:scaleY="0.72"
+        android:pivotX="256"
+        android:pivotY="256"
+        android:translateX="30"
+        android:translateY="-10">
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M90,356V196c0,-13.3 10.7,-24 24,-24h20c11.6,0 21.4,8.2 23.6,19.5c14.6,-14.2 34.4,-22.5 56.4,-22.5c25.2,0 47.6,11.4 61.5,29.3c15.8,-18 39,-29.3 65.5,-29.3c46.4,0 81,34.8 81,84.5V356c0,13.3 -10.7,24 -24,24h-24c-13.3,0 -24,-10.7 -24,-24v-92c0,-22.8 -14.2,-38 -35.5,-38c-21.5,0 -36.5,15.6 -36.5,38.8V356c0,13.3 -10.7,24 -24,24h-24c-13.3,0 -24,-10.7 -24,-24v-92c0,-22.8 -14.2,-38 -35.5,-38c-21.5,0 -36.5,15.6 -36.5,38.8V356c0,13.3 -10.7,24 -24,24h-20c-13.3,0 -24,-10.7 -24,-24z" />
+    </group>
+</vector>

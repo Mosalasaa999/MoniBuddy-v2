@@ -1,0 +1,10 @@
+{
+  "name": "MoniBuddy",
+  "description": "Offline-First Financial Inclusion & Micro-Budgeting app with emergency buffer, predatory loan shield, 2G EDGE sync, USSD simulator, and local Scam Guard.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
