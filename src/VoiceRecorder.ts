@@ -1,4 +1,4 @@
-import { NetworkMode } from './types';
+import type { NetworkMode } from './types';
 import type { WorkerInboundMessage, WorkerOutboundMessage } from './whisper.worker';
 
 export type VoiceRecognitionLanguage =
@@ -96,7 +96,7 @@ interface SpeechRecognitionConstructor {
   available?: (options: { langs: string[]; processLocally?: boolean }) => Promise<string>;
 }
 
-interface SpeechRecognitionWindow extends Window {
+interface SpeechRecognitionWindow {
   SpeechRecognition?: SpeechRecognitionConstructor;
   webkitSpeechRecognition?: SpeechRecognitionConstructor;
 }
@@ -162,7 +162,7 @@ export const detectSpeechCapabilities = (): SpeechCapabilities => {
     };
   }
 
-  const speechWindow = window as SpeechRecognitionWindow;
+  const speechWindow = window as unknown as SpeechRecognitionWindow;
   const Recognition = speechWindow.SpeechRecognition ?? speechWindow.webkitSpeechRecognition;
   let supportsProcessLocally = false;
 
@@ -413,7 +413,8 @@ class WasmVoicePackCoordinator {
    * Silent Auto-Download on unmetered Wi-Fi (when saveData is false).
    * Never auto-downloads on cellular, 2G, Save-Data, or Offline modes.
    */
-  evaluateAutoWifiPrefetch(networkMode: NetworkMode): void {
+  evaluateAutoWifiPrefetch(_networkMode: NetworkMode): void {
+    /*
     if (this.snapshot.status === 'ready' || this.snapshot.status === 'downloading') {
       return;
     }
@@ -429,6 +430,7 @@ class WasmVoicePackCoordinator {
         // Silent background fail on Wi-Fi drop; keeps uncached/queued state cleanly
       });
     }
+    */
   }
 
   queueForWifi(): void {
