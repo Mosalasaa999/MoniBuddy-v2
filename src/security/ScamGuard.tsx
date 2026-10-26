@@ -18,17 +18,17 @@ import {
   Info
 } from 'lucide-react';
 import {
-  TransactionOperationType,
-  getOfficialMaxAgentFeeZar
+  getOfficialMaxAgentFeeZar,
+  type TransactionOperationType
 } from '../scamParser';
 import {
   SEPEDI_SCAM_BANNER_COPY,
-  SupportedWarningLanguage,
   deduceScamAndBuildIncidentReport,
-  getLocalizedSignalDescription
+  getLocalizedSignalDescription,
+  type SupportedWarningLanguage
 } from '../scamDeductionEngine';
 import { translations } from '../translations';
-import { VoiceConfirmationModal } from './VoiceConfirmationModal';
+import { VoiceConfirmationModal } from '../components/VoiceConfirmationModal';
 
 export const ScamGuard: React.FC = () => {
   const { language, t } = useApp();
