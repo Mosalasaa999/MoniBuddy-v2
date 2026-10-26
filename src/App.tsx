@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import { create } from 'zustand';
 
 // Define the shape of our Zustand store
